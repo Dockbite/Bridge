@@ -145,13 +145,15 @@ class Ssh2 implements Backend {
 	 */
 	public function ls() {
 		
-		$handle = opendir('ssh2.sftp://' . $this->_getSftp() . '/' . $this->dir);
+        $handle = opendir('ssh2.sftp://' . $this->_getSftp() . '/' . $this->dir);
+        $dir = array();
+        
 		if(!$handle) {
 			throw new \Exception("Listing directory '{$this->dir}' failed");
 		}
 		while(false !== ($file = readdir($handle))) {
 			if($file != '.' && $file != '..') {
-				$dir[] = $file;
+			    $dir[] = $file;
 			}
 		}
 		closedir($handle);
@@ -159,6 +161,16 @@ class Ssh2 implements Backend {
 		
 		return $dir;
 	}
+    
+    /**
+     * File is directory
+     */
+    public function isdir($path) {
+        
+        $sshPath = sprintf('ssh2.sftp://%s/%s', $this->_getSftp(), $this->dir . '/' . $path);
+        
+        return is_dir($sshPath);
+    }
 	
 	/**
 	 * File or directory exists

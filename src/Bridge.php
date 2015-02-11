@@ -83,7 +83,14 @@ class Bridge {
 	public function ls() {
 		return $this->backend->ls();
 	}
-
+	
+	/**
+     * List current directory
+     */
+    public function isdir($path) {
+        return $this->backend->isdir($path);
+    }
+	
 	/**
 	 * File or directory exists
 	 */

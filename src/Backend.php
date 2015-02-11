@@ -42,6 +42,11 @@ interface Backend {
 	public function ls();
 	
 	/**
+     * List current directory
+     */
+    public function isdir($path);
+    
+    /**
 	 * File or directory exists
 	 */
 	public function exists($path);
